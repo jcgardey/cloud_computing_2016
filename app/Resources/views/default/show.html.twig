@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<h4>Nombre del archivo: {{ file.name }} <a href="{{ file.webViewLink }}">Abrir</a></h4>
+	<div class="container">
+		{{ form_start(shareForm) }}
+			<div class="form-group">
+				{{ form_label(shareForm.email, 'Compartir con') }}
+				{{ form_widget(shareForm.email) }}
+				{{ form_errors(shareForm.email) }}
+			</div>
+			<div class="form-group">
+				{{ form_widget(shareForm.enviar) }}
+			</div>
+		{{ form_end(shareForm) }}
+	</div>
+{% endblock %}

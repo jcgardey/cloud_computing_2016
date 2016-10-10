@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<h1>Subir un Archivo</h1>
+	<div class="container">
+		{% if form is defined %}
+			{{ form_start(form) }}
+				<div class="form-group">
+					{{ form_label(form.name, 'Nombre del Archivo') }}
+					{{ form_widget(form.name) }}
+					{{ form_errors(form.name) }}
+				</div>
+				<div class="form-group">
+					{{ form_label(form.email, 'Compartir el Archivo:') }}
+					{{ form_widget(form.email) }}
+					{{ form_errors(form.email) }}
+				</div>
+				<div class="form-group">
+					{{ form_widget(form.enviar) }}
+				</div>
+			{{ form_end(form) }}
+		{% endif %}
+
+		{% if file is defined %}
+			<span>{{ file.name }}</span>
+			<a href="{{ file.webViewLink }}">Abrir</a>
+			<a href="#">Dejar de Compartir</a>
+		{% endif %}
+
+	</div>
+{% endblock %}

@@ -1,19 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title %} Trabajo Practico Cloud Computing {% endblock %}
+
 {% block body %}
-    <h1>Trabajo Pr&aacute;ctico Cloud Computing</h1>
-    <a href="{{ url('upload') }}">Subir Archivo</a>
-    <ul>
-    {% for file in files %}
-        <li>{{ file.name }} <a href="{{ url('show_file', { id_file: file.id}) }}">Detalles</a></li>
-    {% endfor %}
-    </ul>
-    <a href="{{ url('logout') }}">Cerrar Sesion</a>
-  
-{% endblock %}
-
-{% block stylesheets %}
-{% endblock %}
-
-{% block javascripts %}
+	<div class="container">
+		<h1>Trabajo Practico Cloud Computing</h1>
+		<a href="{{ url ('homepage') }}">Iniciar Sesi&oacute;n</a>
+	</div>
 {% endblock %}

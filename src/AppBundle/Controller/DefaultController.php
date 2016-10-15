@@ -22,7 +22,13 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="index")
      */
-    public function indexAction () {
+    public function indexAction (Request $request) {
+    	$session = $request->getSession();
+
+    	$accessToken = $session->get('google_token');
+
+    	$logger = $this->get('logger');
+    	$logger->info("TOKEN:". $accessToken["access_token"]);
     	return $this->render('default/index.html.twig', array());
     }
 
@@ -44,11 +50,10 @@ class DefaultController extends Controller
         $session = $request->getSession();
         $accessToken = $session->get('google_token');
         $client = $this->createClient();
-      
+      	
         if ($accessToken) {
             
             $client->setAccessToken($accessToken);
-
             $drive_service = new \Google_Service_Drive($client);
             $files_list = $drive_service->files->listFiles(array());
 
@@ -72,9 +77,6 @@ class DefaultController extends Controller
             $request->getSession()->set('google_token', $accessToken);
             $request->getSession()->set('refresh_token', $client->getRefreshToken());
 
-             $logger = $this->get('logger');
-    		$logger->info('ENTRO EN AUTENTICATE');
-            
             return $this->redirectToRoute('homepage');
         }
         if ($request->get('error')) {
@@ -147,14 +149,14 @@ class DefaultController extends Controller
     		if ($shareForm->isSubmitted() && $shareForm->isValid() ) {
     			$share_data = $shareForm->getData();
 
-				$this->savePermission($share_data["share_email"], $id_file);    			
+				$this->savePermission($share_data["share_email"], $id_file, $drive_service);    			
 			    return $this->redirectToRoute('homepage');
     		}
 
     		$unShareForm->handleRequest($request);
     		if ($unShareForm->isSubmitted() && $unShareForm->isValid() ) {
     			$unshare_data = $unShareForm->getData();
-    			$this->deletePermission($unshare_data["unshare_email"], $id_file);
+    			$this->deletePermission($unshare_data["unshare_email"], $id_file, $drive_service);
     			return $this->redirectToRoute('homepage');
 
     		}    		
@@ -168,15 +170,15 @@ class DefaultController extends Controller
 
     }
 
-    private function savePermission($anEmail, $file_id) {
+    private function savePermission($anEmail, $file_id, $drive_service) {
     	$permission = new \Google_Service_Drive_Permission();
 		$permission->setRole('writer');
 		$permission->setType('user');
 		$permission->setEmailAddress($anEmail);
-		$drive_service->permissions->create($file->getId(), $permission);
+		$drive_service->permissions->create($file_id, $permission);
     }
 
-    private function deletePermission($anEmail, $file_id) {
+    private function deletePermission($anEmail, $file_id, $drive_service) {
     	$permissions = $drive_service->permissions->listPermissions($id_file)->getPermissions();
     	foreach ($permissions as $permission) {
     		if ($permission->getEmailAddress() == $anEmail) {

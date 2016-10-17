@@ -17,7 +17,6 @@
 	outline: 1px solid white;
 }
 .container{
-	font-family: helvetica;
 	max-width: 1300px;
 	width: 90%;
 	margin: auto;
@@ -25,6 +24,7 @@
 }
 body{
 	margin: 0;
+	font-family: helvetica;
 }
 .button{
 	padding: 15px;
@@ -34,20 +34,29 @@ body{
 	margin: 5px;
 	text-decoration: none;
 }
+table{
+	width:100%
+}
 tr td a {
     color: white;
     background: black;
     text-decoration: none;
     padding: 5px;
     font-size: 14px;
-    text-align: right;
-    left: 90px;
-    position: relative;
 }
-tr {
-    padding: 1%;
+tr td{
+    padding: 2%;
     text-decoration: none;
 }
 tr:nth-child(2n) {
     background: #ececec;
+}
+button {
+    padding: 10px;
+    background: black;
+    color: white;
+    outline: none;
+    border: none;
+    font-weight: bold;
+    display: inline-block;
 }

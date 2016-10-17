@@ -64,7 +64,11 @@ button {
 .MainTitle .button{
 	color: black;
 	background: white;
+	padding:10px 25px;
 }
 .HomePage{
 	text-align:center;
+}
+form {
+    text-align: center;
 }

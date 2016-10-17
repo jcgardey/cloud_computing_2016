@@ -182,8 +182,16 @@ class DefaultController extends Controller
     	$permissions = $drive_service->permissions->listPermissions($file_id)->getPermissions();
     	foreach ($permissions as $permission) {
     		if ($permission->getEmailAddress() == $anEmail) {
-    			$drive_service->permissions->delete($file_id, $permission);
+    			// $drive_service->permissions->delete($file_id, $permission);
+				
+				try {
+					$drive_service->permissions->delete($file_id, $permission).execute();
+				} catch (IOException e) {
+					System.out.println("An error occurred: " + e);
+				}
+
     		}
+			
     	}
     }
 

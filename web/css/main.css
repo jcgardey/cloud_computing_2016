@@ -6,6 +6,7 @@
 	color: #fff;
 	width:100;
 	font-weight:bold;
+	margin-bottom: 20px;
 }
 .HomeButton{
 	padding: 15px;
@@ -59,4 +60,11 @@ button {
     border: none;
     font-weight: bold;
     display: inline-block;
+}
+.MainTitle .button{
+	color: black;
+	background: white;
+}
+.HomePage{
+	text-align:center;
 }

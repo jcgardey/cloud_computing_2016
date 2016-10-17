@@ -184,11 +184,12 @@ class DefaultController extends Controller
     		if ($permission->getEmailAddress() == $anEmail) {
     			// $drive_service->permissions->delete($file_id, $permission);
 				
-				try {
-					$drive_service->permissions->delete($file_id, $permission).execute();
-				} catch (IOException e) {
-					System.out.println("An error occurred: " + e);
-				}
+			  try {
+				 $drive_service->permissions->delete($file_id, $permission);
+			  } catch (Exception $e) {
+				print "An error occurred: " . $e->getMessage();
+			  }
+
 
     		}
 			

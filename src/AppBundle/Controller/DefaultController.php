@@ -179,7 +179,7 @@ class DefaultController extends Controller
     }
 
     private function deletePermission($anEmail, $file_id, $drive_service) {
-    	$permissions = $drive_service->permissions->listPermissions($id_file)->getPermissions();
+    	$permissions = $drive_service->permissions->listPermissions($file_id)->getPermissions();
     	foreach ($permissions as $permission) {
     		if ($permission->getEmailAddress() == $anEmail) {
     			$drive_service->permissions->delete($file_id, $permission);

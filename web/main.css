@@ -1,0 +1,26 @@
+.MainTitle{
+	margin: 0;
+	padding: 20px 0;
+}
+.HomeButton{
+	padding: 15px;
+	background: black;
+	color: #fff;
+	text-decoration: none;
+	font-weight: bold;
+	text-align: center;
+	outline: 1px solid white;
+}
+.container{
+	text-align: center;
+	background: black;
+	color: #fff;
+	font-family: helvetica;
+	max-width: 1300px;
+	width: 90%;
+	margin: auto;
+	display:block;
+}
+body{
+	margin: 0;
+}

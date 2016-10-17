@@ -1,15 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Lista de Archivos</h1>
-    <a href="{{ url('upload') }}">Subir Archivo</a>
-    <a href="{{ url('logout') }}">Cerrar Sesion</a>
-    <ul>
-    {% for file in files %}
-        <li>{{ file.name }} <a href="{{ url('show_file', { id_file: file.id}) }}">Detalles</a></li>
-    {% endfor %}
-    </ul>
-  
+	<h1 class="MainTitle">Lista de Archivos</h1>
+	<div class="container">
+		<a class="button" href="{{ url('upload') }}">Subir Archivo</a>
+		<a class="button" href="{{ url('logout') }}">Cerrar Sesion</a>
+		<table>
+		{% for file in files %}
+			<tr>
+				<td> {{ file.name }} </td>
+				<td> <a href="{{ url('show_file', { id_file: file.id}) }}">Detalles</a> </td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>  
 {% endblock %}
 
 {% block stylesheets %}

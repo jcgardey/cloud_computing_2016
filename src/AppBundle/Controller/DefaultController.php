@@ -75,8 +75,6 @@ class DefaultController extends Controller
         if ($request->get('code')) {
             $accessToken = $client->fetchAccessTokenWithAuthCode($request->get('code'));
             $request->getSession()->set('google_token', $accessToken);
-            $request->getSession()->set('refresh_token', $client->getRefreshToken());
-
             return $this->redirectToRoute('homepage');
         }
         if ($request->get('error')) {
@@ -156,6 +154,8 @@ class DefaultController extends Controller
     		$unShareForm->handleRequest($request);
     		if ($unShareForm->isSubmitted() && $unShareForm->isValid() ) {
     			$unshare_data = $unShareForm->getData();
+    			
+
     			$this->deletePermission($unshare_data["unshare_email"], $id_file, $drive_service);
     			return $this->redirectToRoute('homepage');
 
@@ -179,20 +179,11 @@ class DefaultController extends Controller
     }
 
     private function deletePermission($anEmail, $file_id, $drive_service) {
-    	$permissions = $drive_service->permissions->listPermissions($file_id)->getPermissions();
+    	$permissions = $drive_service->permissions->listPermissions($file_id, array('fields' => 'permissions'))->getPermissions();
     	foreach ($permissions as $permission) {
     		if ($permission->getEmailAddress() == $anEmail) {
-    			// $drive_service->permissions->delete($file_id, $permission);
-				
-			  try {
-				 $drive_service->permissions->delete($file_id, $permission);
-			  } catch (Exception $e) {
-				print "An error occurred: " . $e->getMessage();
-			  }
-
-
+    			$drive_service->permissions->delete($file_id, $permission->getId());		
     		}
-			
     	}
     }
 
@@ -228,12 +219,7 @@ class DefaultController extends Controller
      */
     public function logoutAction (Request $request) {
     	$session = $request->getSession();
-    	
-    	$client = $this->createClient();
-    	$client->revokeToken($session->get('google_token')); 
-       
         $session->invalidate(1); 
-
         return $this->redirectToRoute('index');
 
     }
